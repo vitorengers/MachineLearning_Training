@@ -13,17 +13,19 @@ class Node {
 
 public:
     Node(T);
-    ~Node();
-    void addNext(std::shared_ptr<Node<T>> next);
-    void addPrev(std::shared_ptr<Node<T>> prev);
-    void printAllNext();
-    void printAllPrev();
-    T getData();
+    ~Node(void);
+    void addNext(std::shared_ptr<Node<T>>);
+    void addPrev(std::shared_ptr<Node<T>>);
+    void printAllNext(void);
+    void printAllPrev(void);
+    T getData(void) const;
+    void setData(T);
+    unsigned int getNodesCount(void) const;
 
 private:
+    T _data;
     std::list<std::shared_ptr<Node<T>>> _next;
     std::list<std::shared_ptr<Node<T>>> _prev;
-    T _data;
     static unsigned int _node_couter;
 
 public:

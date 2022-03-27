@@ -6,11 +6,11 @@ template <typename T>
 unsigned int  Node<T>::_node_couter = 0;
 
 template <typename T>
-Node<T>::Node(T data)
+Node<T>::Node(T data):
+    _data(data),
+    _next(std::list <std::shared_ptr <Node <T>>> ()),
+    _prev(std::list <std::shared_ptr <Node <T>>> ())
 {
-    _data = data;
-    _next = std::list <std::shared_ptr <Node <T>>> ();
-    _prev = std::list <std::shared_ptr <Node <T>>> ();
     _node_couter++;
 }
 
@@ -51,7 +51,19 @@ void Node<T>::printAllPrev()
 }
 
 template <typename T>
-T Node<T>::getData()
+T Node<T>::getData() const
 {
     return _data;
+}
+
+template <typename T>
+void Node<T>::setData(T data)
+{
+    _data = data;
+}
+
+template <typename T>
+unsigned int Node<T>::getNodesCount(void) const
+{
+    return _node_couter;
 }
