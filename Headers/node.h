@@ -1,10 +1,9 @@
 #include <iostream>
-#include <vector>
 #include <memory>
+#include <vector>
 
 #ifndef Node_H
 #define Node_H
-
 
 #pragma once
 

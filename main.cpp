@@ -1,8 +1,11 @@
 #include <iostream>  
 #include <memory>
-#include "Headers/node.h"
+
 #include "Config/types.h"
+
 #include "Headers/graph.h"
+#include "Headers/node.h"
+
 int main() 
 {
 

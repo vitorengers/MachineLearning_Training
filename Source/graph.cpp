@@ -31,6 +31,32 @@ Graph<T>::~Graph()
 }
 
 template <typename T>
+bool Graph<T>::isGraphEmpty()
+{
+    bool retval = false;
+
+    if(_currentNode == nullptr)
+    {
+        retval = true;
+    }
+
+    return retval;
+}
+
+template <typename T>
+unsigned int Graph<T>::getGraphSize()
+{
+    unsigned int retval = 0;
+
+    if(isGraphEmpty() == false)
+    {
+        retval = _currentNode->getNodesCount();
+    }
+    
+    return retval;
+}
+
+template <typename T>
 std::shared_ptr<Node<T>> Graph<T>::createNodePtr()
 {
     std::shared_ptr<Node<T>> retval = nullptr;
@@ -86,37 +112,14 @@ bool Graph<T>::addFirstNode(T data)
 
 }
 
-template <typename T>
-bool Graph<T>::isGraphEmpty()
-{
-    bool retval = false;
 
-    if(_currentNode == nullptr)
-    {
-        retval = true;
-    }
-
-    return retval;
-}
-
-template <typename T>
-unsigned int Graph<T>::getGraphSize()
-{
-    unsigned int retval = 0;
-
-    if(isGraphEmpty() == false)
-    {
-        retval = _currentNode->getNodesCount();
-    }
-    
-    return retval;
-}
 
 template <typename T>
 void Graph<T>::setCurrent(std::shared_ptr<Node<T>> node)
 {
     _currentNode = node;
 }
+
 
 template <typename T>
 bool Graph<T>::goBack()
@@ -137,6 +140,7 @@ bool Graph<T>::goBack()
     return retval;
 }
 
+
 template <typename T>
 bool Graph<T>::nextNode(unsigned int index)
 {
@@ -155,6 +159,7 @@ bool Graph<T>::nextNode(unsigned int index)
     return retval;
 }
 
+
 template <typename T>
 bool Graph<T>::prevNode(unsigned int index)
 {
@@ -171,6 +176,7 @@ bool Graph<T>::prevNode(unsigned int index)
 
     return retval;
 }
+
 
 template <typename T>
 bool Graph<T>::addNextNode(std::shared_ptr<Node<T>> node)
@@ -193,6 +199,7 @@ bool Graph<T>::addNextNode(std::shared_ptr<Node<T>> node)
 
     return retval;
 }
+
 
 template <typename T>
 bool Graph<T>::addPrevNode(std::shared_ptr<Node<T>> node)
@@ -217,11 +224,13 @@ bool Graph<T>::addPrevNode(std::shared_ptr<Node<T>> node)
     return retval;
 }
 
+
 template <typename T>
 bool Graph<T>::addNextNode(T data)
 {
     return addNextNode(std::make_shared<Node<T>>(data));
 }
+
 
 template <typename T>
 bool Graph<T>::addPrevNode(T data)
@@ -235,6 +244,7 @@ bool Graph<T>::removeNextNodeByIndex(unsigned int)
 {
     return false;
 }
+
 
 template <typename T>
 bool Graph<T>::removePrevNodeByIndex(unsigned int)
@@ -262,11 +272,13 @@ bool Graph<T>::removeNextNode(std::shared_ptr<Node<T>> node)
     return _currentNode->removeNext(node);
 }
 
+
 template <typename T>
 bool Graph<T>::removePrevNode(std::shared_ptr<Node<T>> node)
 {
     return _currentNode->removeNext(node);
 }
+
 
 template <typename T>
 void Graph<T>::printCurrentNodeData()
@@ -280,6 +292,7 @@ void Graph<T>::printAllNextNodes()
 {
     _currentNode->printAllNext();
 }
+
 
 template <typename T>
 void Graph<T>::printAllPrevNodes()
