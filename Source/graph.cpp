@@ -244,28 +244,28 @@ bool Graph<T>::removePrevNodeByIndex(unsigned int)
 
 
 template <typename T>
-bool Graph<T>::removeNextNode(T)
+bool Graph<T>::removeNextNode(T data)
 {
-    return false;
+    return _currentNode->removeNext(data);
 }
 
 template <typename T>
-bool Graph<T>::removePrevNode(T)
+bool Graph<T>::removePrevNode(T data)
 {
-    return false;
+    return _currentNode->removeNext(data);
 }
 
 
 template <typename T>
-bool Graph<T>::removeNextNode(std::shared_ptr<Node<T>>)
+bool Graph<T>::removeNextNode(std::shared_ptr<Node<T>> node)
 {
-    return false;
+    return _currentNode->removeNext(node);
 }
 
 template <typename T>
-bool Graph<T>::removePrevNode(std::shared_ptr<Node<T>>)
+bool Graph<T>::removePrevNode(std::shared_ptr<Node<T>> node)
 {
-    return false;
+    return _currentNode->removeNext(node);
 }
 
 template <typename T>

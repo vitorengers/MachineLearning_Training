@@ -29,6 +29,24 @@ Node<T>::~Node()
 }
 
 template <typename T>
+unsigned int Node<T>::getNodesCount(void) const
+{
+    return _node_couter;
+}
+
+template <typename T>
+T Node<T>::getData() const
+{
+    return _data;
+}
+
+template <typename T>
+void Node<T>::setData(T data)
+{
+    _data = data;
+}
+
+template <typename T>
 bool Node<T>::addNext(std::shared_ptr<Node<T>> next)
 {
     bool retval = false;
@@ -73,6 +91,74 @@ bool Node<T>::addPrev(T data)
     return addPrev(std::make_shared<Node<T>>(data));   
 }
 
+template <typename T>
+bool Node<T>::removeNext(std::shared_ptr<Node<T>> node)
+{
+    bool retval = false;
+
+    for (unsigned int i = 0; i < _next.size(); i++)
+    {
+        if(_next.at(i) == node)
+        {
+            _next.erase(_next.begin() + i);
+            retval = true;
+        }
+    }
+
+    return retval;
+}
+
+template <typename T>
+bool Node<T>::removePrev(std::shared_ptr<Node<T>> node)
+{
+    bool retval = false;
+    
+    for (unsigned int i = 0; i < _prev.size(); i++)
+    {
+        if(_prev.at(i) == node)
+        {
+            _prev.erase(_next.begin() + i);
+            retval = true;
+        }
+    }
+
+    return retval;
+}
+
+template <typename T>
+bool Node<T>::removeNext(T data)
+{
+    bool retval = false;
+
+    for (unsigned int i = 0; i < _next.size(); i++)
+    {
+        if(_next.at(i)->getData() == data)
+        {
+            _next.erase(_next.begin() + i);
+            retval = true;
+        }
+    }
+
+    return retval;
+}
+
+template <typename T>
+bool Node<T>::removePrev(T data)
+{
+    bool retval = false;
+
+    for (unsigned int i = 0; i < _next.size(); i++)
+    {
+        if(_prev.at(i)->getData() == data)
+        {
+            _prev.erase(_next.begin() + i);
+            retval = true;
+        }
+    }
+
+    return retval;
+}
+
 // template <typename T>
 // std::list<std::shared_ptr<Node<T>>> getNextNodes()
 // {
@@ -84,61 +170,6 @@ bool Node<T>::addPrev(T data)
 // {
 //     return _prev;
 // }
-
-template <typename T>
-void Node<T>::printNodeData()
-{
-    std::cout << _data << std::endl;
-}
-
-
-template <typename T>
-void Node<T>::printAllNext()
-{
-    for(std::shared_ptr<Node<T>> &n: _next)
-    {
-        std::cout << n->getData() << std::endl;
-    }
-}
-
-template <typename T>
-void Node<T>::printAllPrev()
-{
-    for(std::shared_ptr<Node<T>> &n: _prev)
-    {
-        std::cout << n->getData() << std::endl;
-    }
-}
-
-template <typename T>
-T Node<T>::getData() const
-{
-    return _data;
-}
-
-template <typename T>
-void Node<T>::setData(T data)
-{
-    _data = data;
-}
-
-template <typename T>
-unsigned int Node<T>::getNodesCount(void) const
-{
-    return _node_couter;
-}
-
-template <typename T>
-unsigned int Node<T>::getNumberOfNextNodes()
-{
-    return _next.size();
-}
-
-template <typename T>
-unsigned int Node<T>::getNumberOfPrevNodes()
-{
-    return _prev.size();
-}
 
 template <typename T>
 std::shared_ptr<Node<T>> Node<T>::getNextNode(unsigned int index)
@@ -165,3 +196,46 @@ std::shared_ptr<Node<T>> Node<T>::getPrevNode(unsigned int index)
 
     return retval;
 }
+
+
+template <typename T>
+unsigned int Node<T>::getNumberOfNextNodes()
+{
+    return _next.size();
+}
+
+template <typename T>
+unsigned int Node<T>::getNumberOfPrevNodes()
+{
+    return _prev.size();
+}
+
+
+template <typename T>
+void Node<T>::printNodeData()
+{
+    std::cout << _data << std::endl;
+}
+
+
+template <typename T>
+void Node<T>::printAllNext()
+{
+    for(std::shared_ptr<Node<T>> &n: _next)
+    {
+        std::cout << n->getData() << std::endl;
+    }
+}
+
+template <typename T>
+void Node<T>::printAllPrev()
+{
+    for(std::shared_ptr<Node<T>> &n: _prev)
+    {
+        std::cout << n->getData() << std::endl;
+    }
+}
+
+
+
+
