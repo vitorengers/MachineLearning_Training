@@ -9,6 +9,8 @@ template <typename T>
 Node<T>::Node():
     _next(std::vector <std::shared_ptr <Node <T>>> ()),
     _prev(std::vector <std::shared_ptr <Node <T>>> ())
+    // _nodeMethod(nullptr)
+
 {
     _node_couter++;
 }
@@ -236,6 +238,10 @@ void Node<T>::printAllPrev()
     }
 }
 
-
+template <typename T>
+void Node<T>::setNodeMethod(std::function<T()> method)
+{
+    _nodeMethod = method;
+}
 
 

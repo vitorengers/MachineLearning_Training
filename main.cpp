@@ -6,6 +6,12 @@
 #include "Headers/graph.h"
 #include "Headers/node.h"
 
+bool a ()
+{
+    return true;
+}
+
+
 int main() 
 {
 
@@ -18,9 +24,18 @@ int main()
     // a.addNext(c);
     // a.printAllNext();
 
-    Graph<bool> _graph;
-    Graph<var_type> _graph2;
-    // std::cout << _graph.addFirstNode(12) << std::endl;
+
+
+
+    Graph<var_type> _graph;
+    unsigned int inputsN = 5;
+    unsigned int neuronN = 1;
+    _graph.createFirstLayer(inputsN, neuronN);
+    _graph.printAllNextNodes();
+
+    // _graph._currentNode->setNodeMethod(a);
+    //  std::cout << "123123" << std::endl;
+    // std::cout << _graph._currentNode->_nodeMethod() << std::endl;
     // std::cout << _graph.addNextNode(13) << std::endl;
     // std::cout << _graph.addNextNode(14) << std::endl;
     // std::cout << _graph.addNextNode(15) << std::endl;

@@ -27,6 +27,7 @@ public:
     bool addFirstNode();
     bool addFirstNode(T);
 
+    std::shared_ptr<Node<T>> getCurrent(void);
     void setCurrent(std::shared_ptr<Node<T>>);
     bool goBack();
     bool nextNode(unsigned int);
@@ -46,6 +47,9 @@ public:
     void printCurrentNodeData();
     void printAllNextNodes();
     void printAllPrevNodes();
+
+    void createFirstLayer(unsigned int inputsNumber,  unsigned int neuron);
+    
 
 public:
 private:

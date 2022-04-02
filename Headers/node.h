@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <functional>
+#include <initializer_list>
 
 #ifndef Node_H
 #define Node_H
@@ -42,7 +44,10 @@ public:
     void printNodeData(void);
     void printAllNext(void);
     void printAllPrev(void);
+    
+    void setNodeMethod(std::function<T()>);
 
+    std::function<T()> _nodeMethod;
 
 //private functions
 private:    
@@ -58,6 +63,7 @@ private:
     std::vector<std::shared_ptr<Node<T>>> _next;
     std::vector<std::shared_ptr<Node<T>>> _prev;
     static unsigned int _node_couter;
+    
 
 };
 

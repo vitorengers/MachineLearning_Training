@@ -120,6 +120,11 @@ void Graph<T>::setCurrent(std::shared_ptr<Node<T>> node)
     _currentNode = node;
 }
 
+template <typename T>
+std::shared_ptr<Node<T>> Graph<T>::getCurrent(void)
+{
+    return _currentNode;
+}
 
 template <typename T>
 bool Graph<T>::goBack()
@@ -154,7 +159,6 @@ bool Graph<T>::nextNode(unsigned int index)
         _currentNode = node;
         retval = true;
 
-        std::cout << " dajsidasjd";
     }
     return retval;
 }
@@ -298,4 +302,26 @@ template <typename T>
 void Graph<T>::printAllPrevNodes()
 {
     _currentNode->printAllPrev();
+}
+
+template <typename T>
+void Graph<T>::createFirstLayer(unsigned int inputsNumber,  unsigned int neuronsNumber)
+{
+   
+    addFirstNode(11);
+
+    std::shared_ptr<Node<T>> holdFirstNode = getCurrent();
+
+    for (unsigned int n = 0; n < neuronsNumber; n++)
+    {
+        std::shared_ptr<Node<T>> neuron = std::make_shared<Node<T>>();
+
+        for(unsigned int i = 0; i < inputsNumber; i++)
+        {
+            addNextNode(11 + i);
+            nextNode(i);
+            addNextNode(neuron);
+            prevNode(0);
+        }
+    }
 }
