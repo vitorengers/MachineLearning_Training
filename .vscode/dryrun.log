@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/engers/Videos/ML'
+ 
+g++-9 -o main Source/Graph.cpp Source/MultiLayerPerceptron.cpp Source/Types_prv.cpp Source/Perceptron.cpp Source/CsvReader.cpp Source/Node.cpp Source/SingleLayerPerceptron.cpp main.cpp -Wall -std=c++2a -g -pthread 
+make: Leaving directory '/home/engers/Videos/ML'
+ 
