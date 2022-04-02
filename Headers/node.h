@@ -62,7 +62,7 @@ private:
     T _data;
     std::vector<std::shared_ptr<Node<T>>> _next;
     std::vector<std::shared_ptr<Node<T>>> _prev;
-    static unsigned int _node_couter;
+    static unsigned int _node_counter;
     
 
 };

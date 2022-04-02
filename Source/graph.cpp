@@ -305,23 +305,49 @@ void Graph<T>::printAllPrevNodes()
 }
 
 template <typename T>
-void Graph<T>::createFirstLayer(unsigned int inputsNumber,  unsigned int neuronsNumber)
+void Graph<T>::createSingleLayerPerceptron(unsigned int inputsNumber,  unsigned int neuronsNumber, int biasValue)
 {
-   
-    addFirstNode(11);
+    addFirstNode(10);
 
     std::shared_ptr<Node<T>> holdFirstNode = getCurrent();
 
     for (unsigned int n = 0; n < neuronsNumber; n++)
     {
-        std::shared_ptr<Node<T>> neuron = std::make_shared<Node<T>>();
+        std::shared_ptr<Node<T>> neuron = std::make_shared<Node<T>>(100 + n);
 
-        for(unsigned int i = 0; i < inputsNumber; i++)
+        if (n == 0) //will create the first neuron
         {
-            addNextNode(11 + i);
-            nextNode(i);
-            addNextNode(neuron);
-            prevNode(0);
+            for (unsigned int i = 0; i < inputsNumber; i++)
+            {
+                addNextNode(11 + i);
+                nextNode(i);
+                addNextNode(neuron);
+
+                if (i == 0)
+                {
+                    nextNode(n);
+                    addNextNode(holdFirstNode);
+                    prevNode(i);
+                }
+                prevNode(0);
+            }
+        }
+        else    //for the other neuron. Shoudnt create another inputs to point to new neurons
+        {
+            for (unsigned int i = 0; i < inputsNumber; i++)
+            {
+                nextNode(i);
+                addNextNode(neuron);
+
+                if (i == 0)
+                {
+                    nextNode(n);
+                    addNextNode(holdFirstNode);
+                    prevNode(i);
+                }
+
+                prevNode(0);
+            }
         }
     }
 }

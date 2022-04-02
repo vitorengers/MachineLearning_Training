@@ -1,4 +1,4 @@
-FLAGS := -Wall -std=c++11 -g -pthread 
+FLAGS := -Wall -std=c++17 -g -pthread 
 TARGET := main
 
 SOURCES := $(shell find -name "*.cpp")

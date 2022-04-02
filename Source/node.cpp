@@ -3,7 +3,7 @@
 // #pragma once
 
 template <typename T>
-unsigned int  Node<T>::_node_couter = 0;
+unsigned int  Node<T>::_node_counter = 0;
 
 template <typename T>
 Node<T>::Node():
@@ -12,7 +12,7 @@ Node<T>::Node():
     // _nodeMethod(nullptr)
 
 {
-    _node_couter++;
+    _node_counter++;
 }
 
 template <typename T>
@@ -21,19 +21,19 @@ Node<T>::Node(T data):
     _next(std::vector <std::shared_ptr <Node <T>>> ()),
     _prev(std::vector <std::shared_ptr <Node <T>>> ())
 {
-    _node_couter++;
+    _node_counter++;
 }
 
 template <typename T>
 Node<T>::~Node()
 {
-    _node_couter--;
+    _node_counter--;
 }
 
 template <typename T>
 unsigned int Node<T>::getNodesCount(void) const
 {
-    return _node_couter;
+    return _node_counter;
 }
 
 template <typename T>

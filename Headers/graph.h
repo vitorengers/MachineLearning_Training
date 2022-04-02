@@ -48,7 +48,7 @@ public:
     void printAllNextNodes();
     void printAllPrevNodes();
 
-    void createFirstLayer(unsigned int inputsNumber,  unsigned int neuron);
+    void createSingleLayerPerceptron(unsigned int inputsNumber,  unsigned int neuron, int bias = 1);
     
 
 public:
