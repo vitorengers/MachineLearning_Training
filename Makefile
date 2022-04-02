@@ -1,4 +1,4 @@
-FLAGS := -Wall -std=c++17 -g -pthread 
+FLAGS := -Wall -std=c++2a -g -pthread 
 TARGET := main
 
 SOURCES := $(shell find -name "*.cpp")
@@ -7,10 +7,10 @@ DEPENDENCIES := $(patsubst %.cpp,%.d,$(SOURCES))
 all: $(TARGET)
 
 %.o: %.cpp $(DEPENDENCIES)
-	$ g++ -c -o $@ $< $(FLAGS)
+	$ g++-9 -c -o $@ $< $(FLAGS)
 
 $(TARGET): $(SOURCES)
-	$ g++ -o $@ $^ $(FLAGS)
+	$ g++-9 -o $@ $^ $(FLAGS)
 
 mk: $(TARGET)
 	$ mkdir test

@@ -84,5 +84,6 @@
         "qr": "cpp",
         "svd": "cpp",
         "stdvector": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
