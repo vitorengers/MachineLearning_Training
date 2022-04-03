@@ -1,17 +1,19 @@
 #include "../Headers/PerceptronData.h"
 
 PerceptronData::PerceptronData():
+        _name(""),
         _weight(0.0),
         _value(0.0),
-        _name("")
+        _expected(0)
 {
 
 }
 
 PerceptronData::PerceptronData(std::string name):
+        _name(name),
         _weight(0.0),
         _value(0.0),
-        _name(name)
+        _expected(0)
 {
 
 }
@@ -19,6 +21,16 @@ PerceptronData::PerceptronData(std::string name):
 PerceptronData::~PerceptronData()
 {
 
+}
+
+std::string PerceptronData::getName (void) const
+{
+    return _name;
+}
+
+void PerceptronData::setName (std::string name)
+{
+    _name = name;
 }
 
 float PerceptronData::getWeight (void) const
@@ -41,14 +53,14 @@ void PerceptronData::setValue (float value)
     _value = value;
 }
 
-std::string PerceptronData::getName (void) const
+float PerceptronData::getExpected (void) const
 {
-    return _name;
+    return _expected;
 }
 
-void PerceptronData::setName (std::string name)
+void PerceptronData::setExpected (float expected)
 {
-    _name = name;
+    _expected = expected;
 }
 
 float PerceptronData::getXnWnResult (void) const

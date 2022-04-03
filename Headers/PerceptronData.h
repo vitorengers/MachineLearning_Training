@@ -17,14 +17,17 @@ public:
     PerceptronData();
     ~PerceptronData();
 
+    std::string getName(void) const;
+    void setName (std::string);
+
     float getWeight(void) const;
-    void setWeight (float weigth);
+    void setWeight (float);
 
     float getValue(void) const;
-    void setValue (float value);
+    void setValue (float);
 
-    std::string getName(void) const;
-    void setName (std::string name);
+    float getExpected (void) const;
+    void setExpected (float);
 
     float getXnWnResult(void) const;
 
@@ -34,6 +37,7 @@ public:
         os << "Identifier: " << data.getName() << std::endl;
         os << "Weight: " << data.getWeight() << std::endl;
         os << "Value: " << data.getValue() << std::endl;
+        os << "Expected: " << data.getExpected() << std::endl;
         os << "*-------------------------------*" << std::endl;
         return os;
     }
@@ -41,9 +45,10 @@ public:
 
 
 private:
+    std::string _name;
     float _weight;
     float _value;
-    std::string _name;
+    float _expected;
 };
 
 #endif

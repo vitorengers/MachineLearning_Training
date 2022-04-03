@@ -25,46 +25,35 @@ bool a ()
 int main() 
 {
 
-    // std::vector< std::vector<unsigned int>> myData
-    // (
-    //     {
-    //         {0, 0, 0},
-    //         {0, 1, 0},
-    //         {1, 0, 0},
-    //         {1, 1, 1},
-    //     }
-    // );
+    std::vector< std::vector<unsigned int>> myData
+    (
+        {
+            {0, 0, 1, 0},
+            {0, 1, 1, 0},
+            {1, 0, 1, 0},
+            {1, 1, 1, 1},
+        }
+    );
 
-    // // for (auto &l: myData)
-    // // {
-    // //     std::cout << "data line: ";
-    // //     for (auto &i: l)
-    // //     {
-    // //         std::cout << i << " ";
-    // //     }
+    std::vector<unsigned int> teste = myData.at(0);
 
-    // //     std::cout << std::endl;
-    // // }
-
-    // Graph<var_type> _graph;
     unsigned int inputsN = 2 + 1; //for the bias
     unsigned int neuronN = 1;
     unsigned int biasValue = 1;
 
     SingleLayerPerceptron _perceptron;
     _perceptron.createSingleLayerPerceptron(inputsN, neuronN, 1);
-    _perceptron.debugPerceptron();
+ 
+    for (int j = 0; j < 3; j++)
+    {
+        for (int i = 0; i < 4; i ++)
+        {
+            std::cout << "  ITERACTION NUMBER " << i + 1 << std::endl;
+            std::vector<unsigned int> teste = myData.at(i);
+            _perceptron.executeOneIteraction(teste);
+            _perceptron.debugPerceptron();
+        }
+    }
 
-    _perceptron.executeOneIteraction();
-
-    _perceptron.debugPerceptron();
-    // // _perceptron.executeOneIteraction();
-    // // _perceptron.debugPerceptron();
-
-    // // // // // // PerceptronData _pData ("teste");
-    // // // // // // _pData.setWeight(12.3);
-    // // // // // // _pData.setValue(13);
-
-    // // // // // // std::cout << _pData << std::endl;
     return 0;
 }

@@ -19,7 +19,7 @@ public:
 
     void createPerceptron(unsigned int inputsNumber,  std::vector<unsigned int> neuronsNumberVector, unsigned int bias = 1);
     void debugPerceptron();
-    void executeOneIteraction();
+    void executeOneIteraction(std::vector<unsigned int> input);
 
 public:
 
