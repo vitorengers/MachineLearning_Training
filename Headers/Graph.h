@@ -41,12 +41,12 @@ public:
     bool addNextNode(std::string name);
     // bool addPrevNode(T);
 
-    bool removeNextNodeByIndex(unsigned int);
-    bool removePrevNodeByIndex(unsigned int);
-    bool removeNextNode(T);
-    bool removePrevNode(T);
-    bool removeNextNode(std::shared_ptr<Node<T>>);
-    bool removePrevNode(std::shared_ptr<Node<T>>);
+    // bool removeNextNodeByIndex(unsigned int);
+    // bool removePrevNodeByIndex(unsigned int);
+    // bool removeNextNode(T);
+    // bool removePrevNode(T);
+    // bool removeNextNode(std::shared_ptr<Node<T>>);
+    // bool removePrevNode(std::shared_ptr<Node<T>>);
 
     void printCurrentNodeData();
     void printAllNextNodes();

@@ -16,13 +16,13 @@ Graph<T>::Graph(T data):
 
 }
 
-template <typename T>
-Graph<T>::Graph(std::shared_ptr<Node<T>> node):
-    _currentNode(node),
-    _prevNode(nullptr)
-{
+// template <typename T>
+// Graph<T>::Graph(std::shared_ptr<Node<T>> node):
+//     _currentNode(node),
+//     _prevNode(nullptr)
+// {
 
-}
+// }
 
 template <typename T>
 Graph<T>::~Graph()
@@ -288,45 +288,45 @@ bool Graph<T>::addNextNode(std::string name)
     return addNextNode(std::make_shared<Node<T>>(name));
 }
 
-template <typename T>
-bool Graph<T>::removeNextNodeByIndex(unsigned int)
-{
-    return false;
-}
+// template <typename T>
+// bool Graph<T>::removeNextNodeByIndex(unsigned int)
+// {
+//     return false;
+// }
 
 
-template <typename T>
-bool Graph<T>::removePrevNodeByIndex(unsigned int)
-{
-    return false;
-}
+// template <typename T>
+// bool Graph<T>::removePrevNodeByIndex(unsigned int)
+// {
+//     return false;
+// }
 
 
-template <typename T>
-bool Graph<T>::removeNextNode(T data)
-{
-    return _currentNode->removeNext(data);
-}
+// template <typename T>
+// bool Graph<T>::removeNextNode(T data)
+// {
+//     return _currentNode->removeNext(data);
+// }
 
-template <typename T>
-bool Graph<T>::removePrevNode(T data)
-{
-    return _currentNode->removeNext(data);
-}
-
-
-template <typename T>
-bool Graph<T>::removeNextNode(std::shared_ptr<Node<T>> node)
-{
-    return _currentNode->removeNext(node);
-}
+// template <typename T>
+// bool Graph<T>::removePrevNode(T data)
+// {
+//     return _currentNode->removeNext(data);
+// }
 
 
-template <typename T>
-bool Graph<T>::removePrevNode(std::shared_ptr<Node<T>> node)
-{
-    return _currentNode->removeNext(node);
-}
+// template <typename T>
+// bool Graph<T>::removeNextNode(std::shared_ptr<Node<T>> node)
+// {
+//     return _currentNode->removeNext(node);
+// }
+
+
+// template <typename T>
+// bool Graph<T>::removePrevNode(std::shared_ptr<Node<T>> node)
+// {
+//     return _currentNode->removeNext(node);
+// }
 
 
 template <typename T>

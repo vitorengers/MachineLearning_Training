@@ -3,12 +3,12 @@
 
 #pragma once
 
-#include <iostream>
 #include <memory>
 #include <vector>
 #include <functional>
 #include <initializer_list>
 #include <string>
+#include <iostream>
 
 template <typename T>
 class Node {
@@ -17,16 +17,20 @@ class Node {
 public: 
     Node();
     Node(T);
-    Node(std::string name);
+    // Node(std::string name);
     ~Node();
 
     unsigned int getNodesCount(void) const;
 
     T getData(void) const;
+    // std::shared_ptr<T> getDataPtr(void);
+    std::shared_ptr<T> getDataPtr(void) const;
     void setData(T);
 
-    std::string getName(void) const;
-    void setName(std::string name);
+    // float getWeight(void);
+
+    // std::string getName(void) const;
+    // void setName(std::string name);
 
 
     bool addNext(std::shared_ptr<Node<T>>);
@@ -48,12 +52,12 @@ public:
     unsigned int getNumberOfPrevNodes();
     
     void printNodeData(void);
+
+    //maybe move the below methods into graph
+
     void printAllNext(void);
     void printAllPrev(void);
 
-    void printAllNextData(void);
-    void printAllPrevData(void);
-    
     // void setNodeMethod(std::function<T()>);
 
     // std::function<T()> _nodeMethod;
@@ -68,14 +72,15 @@ public:
 
 //private attributes
 private:    
-    T _data;
+    std::shared_ptr<T> _data;
     std::vector<std::shared_ptr<Node<T>>> _next;
     std::vector<std::shared_ptr<Node<T>>> _prev;
 
-    float _weight;
+    // float _weight;
     unsigned int _nodeId;
-    std::string _nodeName;
+    // std::string _nodeName;
 
+    //include a vertex class later
     static unsigned int _node_counter;
     
 

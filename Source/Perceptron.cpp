@@ -29,7 +29,11 @@ void Perceptron::createPerceptron(unsigned int inputsNumber,  std::vector<unsign
 
     for (unsigned int n = 0; n < neuronsNumber; n++)
     {
-        std::shared_ptr<Node<var_type>> neuron = std::make_shared<Node<var_type>>("Neuron");
+
+        std::shared_ptr<Node<var_type>> holdCurrent = _perceptronGraph.getCurrent();
+
+        var_type neuronData ("Neuron");
+        std::shared_ptr<Node<var_type>> neuron = std::make_shared<Node<var_type>>(neuronData);
 
         if (n == 0) //will create the first neuron
         {
@@ -73,7 +77,37 @@ void Perceptron::createPerceptron(unsigned int inputsNumber,  std::vector<unsign
                 _perceptronGraph.prevNode(0);
             }
         }
+
+        _perceptronGraph.setCurrent(holdCurrent);
     }
+}
+
+void Perceptron::executeOneIteraction()
+{
+    //for single layer yet
+    // _perceptronGraph.prevNode(0);
+
+    unsigned int prev = 0;
+
+    float sum = 0;
+
+    while(_perceptronGraph.prevNode(prev) == true)
+    {
+        float XnWn = _perceptronGraph.getCurrent()->getDataPtr()->getXnWnResult();
+        sum += XnWn;
+        _perceptronGraph.nextNode(0);
+        prev++;
+    }
+
+    _perceptronGraph.nextNode(0);
+
+
+    // if(sum > 0)
+    // {
+
+    // }
+
+    // std::cout << "SUM: " << sum << std::endl;
 }
 
 

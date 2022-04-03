@@ -15,7 +15,7 @@
 #include "Headers/CsvReader.h"
 
 #include "Headers/SingleLayerPerceptron.h"
-
+#include "Headers/PerceptronData.h"
 bool a ()
 {
     return true;
@@ -25,51 +25,46 @@ bool a ()
 int main() 
 {
 
-    std::vector< std::vector<unsigned int>> myData
-    (
-        {
-            {0, 0, 0},
-            {0, 1, 0},
-            {1, 0, 0},
-            {1, 1, 1},
-        }
-    );
-
-    // for (auto &l: myData)
-    // {
-    //     std::cout << "data line: ";
-    //     for (auto &i: l)
+    // std::vector< std::vector<unsigned int>> myData
+    // (
     //     {
-    //         std::cout << i << " ";
+    //         {0, 0, 0},
+    //         {0, 1, 0},
+    //         {1, 0, 0},
+    //         {1, 1, 1},
     //     }
+    // );
 
-    //     std::cout << std::endl;
-    // }
+    // // for (auto &l: myData)
+    // // {
+    // //     std::cout << "data line: ";
+    // //     for (auto &i: l)
+    // //     {
+    // //         std::cout << i << " ";
+    // //     }
+
+    // //     std::cout << std::endl;
+    // // }
 
     // Graph<var_type> _graph;
     unsigned int inputsN = 2 + 1; //for the bias
     unsigned int neuronN = 1;
-
     unsigned int biasValue = 1;
-    // _graph.createSingleLayerPerceptron(inputsN, neuronN);
 
     SingleLayerPerceptron _perceptron;
     _perceptron.createSingleLayerPerceptron(inputsN, neuronN, 1);
     _perceptron.debugPerceptron();
 
-    // std::cout << " neurons " << std::endl;
-    // _graph.printAllPrevNodes();
+    _perceptron.executeOneIteraction();
 
-    // std::cout << " inputs " << std::endl;
-    // _graph.printAllNextNodes();
+    _perceptron.debugPerceptron();
+    // // _perceptron.executeOneIteraction();
+    // // _perceptron.debugPerceptron();
 
-    // _graph.nextNode(4);
-    // _graph.nextNode(0);
-    // std::cout << " neurons " << std::endl;
+    // // // // // // PerceptronData _pData ("teste");
+    // // // // // // _pData.setWeight(12.3);
+    // // // // // // _pData.setValue(13);
 
-    // _graph.printAllNextNodes();
-
-    // std::cout << _graph.get
-
+    // // // // // // std::cout << _pData << std::endl;
     return 0;
 }
