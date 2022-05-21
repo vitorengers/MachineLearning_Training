@@ -7,10 +7,10 @@ DEPENDENCIES := $(patsubst %.cpp,%.d,$(SOURCES))
 all: $(TARGET)
 
 %.o: %.cpp $(DEPENDENCIES)
-	$ g++-9 -c -o $@ $< $(FLAGS)
+	$ g++-12 -c -o $@ $< $(FLAGS)
 
 $(TARGET): $(SOURCES)
-	$ g++-9 -o $@ $^ $(FLAGS)
+	$ g++-12 -o $@ $^ $(FLAGS)
 
 mk: $(TARGET)
 	$ mkdir test
@@ -20,4 +20,5 @@ run: $(TARGET)
 
 clean:
 	@-rm -f *.o $(TARGET)
+
 
