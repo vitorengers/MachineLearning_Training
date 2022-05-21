@@ -10,25 +10,7 @@ SingleLayerPerceptron::~SingleLayerPerceptron()
 {
 
 }
-void SingleLayerPerceptron::createSingleLayerPerceptron(unsigned int inputsNumber,  unsigned int neuronsNumber, int bias)
+void SingleLayerPerceptron::createSingleLayerPerceptron(unsigned int inputsNumber,  unsigned int outputsNumber)
 {
-    std::vector <unsigned int> n;
-    n.push_back(neuronsNumber);
-
-    Perceptron::createPerceptron(inputsNumber, n, bias);
+    Perceptron::createPerceptron2(inputsNumber, std::vector<unsigned int> (), outputsNumber);
 }
-
-
-
-
-
-
-
-
-
-
-// //private methods
-// void SingleLayerPerceptron::createPerceptron(unsigned int inputsNumber,  unsigned int neuronsNumber, int bias) 
-// {
-//     Perceptron::createPerceptron(inputsNumber, 1, bias);
-// }

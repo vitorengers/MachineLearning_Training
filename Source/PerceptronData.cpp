@@ -2,7 +2,6 @@
 
 PerceptronData::PerceptronData():
         _name(""),
-        _weight(0.0),
         _value(0.0),
         _expected(0)
 {
@@ -11,7 +10,6 @@ PerceptronData::PerceptronData():
 
 PerceptronData::PerceptronData(std::string name):
         _name(name),
-        _weight(0.0),
         _value(0.0),
         _expected(0)
 {
@@ -33,14 +31,34 @@ void PerceptronData::setName (std::string name)
     _name = name;
 }
 
-float PerceptronData::getWeight (void) const
+// float PerceptronData::getWeight (void) const
+// {
+//     return _weight;
+// }
+
+// void PerceptronData::setWeight (float weigth)
+// {
+//     _weight = weigth;
+// }
+
+float PerceptronData::getWeight(unsigned int index) const
 {
-    return _weight;
+    float retval = -1;
+
+    if (index < _weight.size())
+    {
+        retval = _weight.at(index);
+    }
+
+    return retval;
 }
 
-void PerceptronData::setWeight (float weigth)
+void PerceptronData::setWeight (float weigth, unsigned int index)
 {
-    _weight = weigth;
+    if (index < _weight.size())
+    {
+        _weight.at(index) = weigth;
+    }
 }
 
 float PerceptronData::getValue (void) const
@@ -63,8 +81,21 @@ void PerceptronData::setExpected (float expected)
     _expected = expected;
 }
 
-float PerceptronData::getXnWnResult (void) const
+// float PerceptronData::getXnWnResult (void) const
+// {
+//     return _weight*_value;
+// }
+
+void PerceptronData::addNewWeight(void)
 {
-    return _weight*_value;
+    _weight.push_back(0.00f);
 }
+
+
+float PerceptronData::getXnWnResult (unsigned int index) const
+{
+    return _weight.at(index)*_value;
+}
+
+
 
