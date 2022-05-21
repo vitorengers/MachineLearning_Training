@@ -5,11 +5,12 @@
 
 #include "Perceptron.h"
 
-class MultiLayerPerceptron: protected Perceptron
+class MultiLayerPerceptron: public Perceptron
 {
 public:
     MultiLayerPerceptron();
     ~MultiLayerPerceptron();
+    void createMultiLayerPerceptron(unsigned int inputsNumber,  std::vector<unsigned int> hiddenLayersNumber, unsigned int outputsNumber);
 
 private:
 

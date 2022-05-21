@@ -10,7 +10,7 @@ class SingleLayerPerceptron: public Perceptron
 public:
     SingleLayerPerceptron();
     ~SingleLayerPerceptron();
-    void createSingleLayerPerceptron(unsigned int inputsNumber,  unsigned int neuronsNumber, int bias);
+    void createSingleLayerPerceptron(unsigned int inputsNumber,  unsigned int outputsNumber);
 
 
 private:
