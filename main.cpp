@@ -19,7 +19,7 @@
 #include "Headers/SingleLayerPerceptron.h"
 #include "Headers/MultiLayerPerceptron.h"
 #include "Headers/PerceptronData.h"
-
+#include <iomanip>
 #include <chrono>
 
 bool a ()
@@ -58,6 +58,8 @@ std::vector<unsigned int> getInputs()
 
 int main() 
 {
+
+    std::setprecision(17);
     // auto start = std::chrono::steady_clock::now();
 
     std::vector<std::vector<float>> inputs
@@ -75,18 +77,18 @@ int main()
     (
         {
             //y
-            {55.0f},
-            {56.0f},
-            {56.0f},
-            {57.0f},
+            {55.0f, 11.0f, 4.0f},
+            {56.0f, 12.0f, 5.0f},
+            {57.0f, 13.0f, 6.0f},
+            {58.0f, 14.0f, 7.0f},
         }
     );
 
-    std::vector<unsigned int> hidenLayersNumber;
+    std::vector<unsigned int> hidenLayersNumber = {5, 3};
 
     unsigned int inputsNumber = 2 + 1;
 
-    unsigned int outputsNumber = 1;
+    unsigned int outputsNumber = 3;
 
 
     MultiLayerPerceptron _perceptron;
@@ -95,7 +97,11 @@ int main()
     for (unsigned int i = 0; i < inputs.size(); i++)
     {
         _perceptron.setInputsAndExpected(inputs.at(i), expected.at(i));
-        _perceptron.executeOneIteraction2();
+        _perceptron.executeOneIteraction();
+        // _perceptron.softMaxNormalization();
+        _perceptron.updateWeights();
+        std::pair <unsigned int, float> result = _perceptron.getResult();
+        std::cout << "Result -> Class Number: " << result.first << " with percentage of: " << result.second << std::endl;
     }
 
 
