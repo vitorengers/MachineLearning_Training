@@ -2,7 +2,7 @@
 
 PerceptronData::PerceptronData():
         _name(""),
-        _value(0.0),
+        _value(0.0f),
         _expected(0)
 {
 
@@ -10,7 +10,7 @@ PerceptronData::PerceptronData():
 
 PerceptronData::PerceptronData(std::string name):
         _name(name),
-        _value(0.0),
+        _value(0.0f),
         _expected(0)
 {
 
@@ -88,7 +88,7 @@ void PerceptronData::setExpected (float expected)
 
 void PerceptronData::addNewWeight(void)
 {
-    _weight.push_back(0.00f);
+    _weight.push_back(1.00f);
 }
 
 
