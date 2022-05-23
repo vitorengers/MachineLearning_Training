@@ -51,6 +51,8 @@ private:
     std::string _name;
     float _value;
     float _expected;
+    float _normalizedValue;
+    float _error;
     std::vector<float> _weight;
 };
 
