@@ -31,7 +31,11 @@ public:
     void setNumberOfHiddenLayers(unsigned int);
 
     void updateWeights(void);
+    float sigmoidFunc(float sum);
+    float derivativeSigmoidFunc(float sum);
 
+    std::pair <unsigned int, float> getResultWithNormalized(void);
+    std::pair <float, float> getSumOfValueAndSumOfErrors(void);
 
 public:
 

@@ -17,7 +17,6 @@ class Node {
 public: 
     Node();
     Node(T);
-    // Node(std::string name);
     ~Node();
 
     unsigned int getNodesCount(void) const;

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
 
 class PerceptronData
 {
@@ -21,13 +22,26 @@ public:
     // void setWeight (float);
 
     float getWeight(unsigned int) const;
-    void setWeight (float, unsigned int);
+    void setWeight(float, unsigned int);
 
     float getValue(void) const;
-    void setValue (float);
+    void setValue(float);
 
-    float getExpected (void) const;
-    void setExpected (float);
+    float getNormalizedValue(void) const;
+    void setNormalizedValue(float);
+
+    float getSum(void) const;
+    void setSum(float);
+
+    float getSmallDelta(void) const;
+    void setSmallDelta(float);
+
+
+    float getExpected(void) const;
+    void setExpected(float);
+
+    float getError(void) const;
+    void setError(float);
 
     // float getXnWnResult(void) const;
 
@@ -50,10 +64,13 @@ public:
 private:
     std::string _name;
     float _value;
-    float _expected;
     float _normalizedValue;
+    float _sum;
+    float _smallDelta;
+    float _expected;
     float _error;
     std::vector<float> _weight;
+    std::default_random_engine _generator;
 };
 
 #endif
