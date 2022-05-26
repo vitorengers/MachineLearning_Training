@@ -187,28 +187,36 @@ void Perceptron::executeOneIteraction(void)
     //! While the next hidden layers 
     for (unsigned int hiddenLayerIndex = 0; hiddenLayerIndex < getNumberOfHiddenLayers() + 1; hiddenLayerIndex++)
     {
-        unsigned int currHidenLayerIndex = 0;
-        while (_perceptronGraph.nextNode(currHidenLayerIndex) == true)
+        unsigned int currNeuronIndex = 0;
+        while (_perceptronGraph.nextNode(currNeuronIndex) == true)
         {
             float sum = 0.0f;
+
             unsigned int prevNeuronsIndex = 0;
             while (_perceptronGraph.prevNode(prevNeuronsIndex) == true)
             {
                 float value = _perceptronGraph.getCurrent()->getDataPtr()->getValue();
-                _perceptronGraph.nextNode(currHidenLayerIndex);
+
+                _perceptronGraph.nextNode(currNeuronIndex);
 
                 sum += value*_perceptronGraph.getCurrent()->getDataPtr()->getWeight(prevNeuronsIndex);
                 prevNeuronsIndex++;
             }
 
             //! Pass the sum thgough the sigmoid
-            float sigmoid = 1/(1 + std::exp(-sum));
-
+            // float sigmoid = 1/(1 + std::exp(-sum));
+            float sigmoid = sigmoidFunc(sum);
             //! And set the new value for the current neuron
+            _perceptronGraph.getCurrent()->getDataPtr()->setSum(sum);
             _perceptronGraph.getCurrent()->getDataPtr()->setValue(sigmoid);
 
+            if (hiddenLayerIndex == getNumberOfHiddenLayers())
+            {
+                _perceptronGraph.getCurrent()->getDataPtr()->setError(_perceptronGraph.getCurrent()->getDataPtr()->getExpected() - sigmoid);
+            }
+
             _perceptronGraph.prevNode(0);
-            currHidenLayerIndex++;
+            currNeuronIndex++;
 
             // _perceptronGraph.getCurrent()->getDataPtr()->setValue(input.at(index));
             // // _perceptronGraph.getCurrent()->getDataPtr()->setExpected(input.at(input.size() - 1));
@@ -239,7 +247,7 @@ void Perceptron::softMaxNormalization(void)
     while(_perceptronGraph.prevNode(index) == true)
     {
         float newSoftMaxData = std::exp(_perceptronGraph.getCurrent()->getDataPtr()->getValue())/softMaxSum;
-        _perceptronGraph.getCurrent()->getDataPtr()->setValue(newSoftMaxData);
+        _perceptronGraph.getCurrent()->getDataPtr()->setNormalizedValue(newSoftMaxData);
         _perceptronGraph.nextNode(0);
         index++;
     }
@@ -247,19 +255,34 @@ void Perceptron::softMaxNormalization(void)
     _perceptronGraph.setCurrent(holdFeedbackNode);
 }
 
-std::pair <unsigned int, float> Perceptron::getResult(void)
+std::pair <unsigned int, float> Perceptron::getResultWithNormalized(void)
 {
     std::pair retval = std::make_pair(0, 0.0f);
 
     unsigned int index = 0;
+
+     while(_perceptronGraph.prevNode(index) == true)
+    {
+        // std::cout << "Output Num " << index << " sigmoid: " << _perceptronGraph.getCurrent()->getDataPtr()->getValue() << std::endl;
+        // std::cout << "Output Num " << index << " value: " << _perceptronGraph.getCurrent()->getDataPtr()->getSum() << std::endl;
+        // std::cout << "Output Num " << index << " error: " << _perceptronGraph.getCurrent()->getDataPtr()->getError() << std::endl;
+
+        index++;
+        _perceptronGraph.nextNode(0);
+    }
+
+    index = 0;
     while(_perceptronGraph.prevNode(index) == true)
     {
-        float actualValue = _perceptronGraph.getCurrent()->getDataPtr()->getValue();
+        float actualValue = _perceptronGraph.getCurrent()->getDataPtr()->getNormalizedValue();
+        std::cout << actualValue << std::endl;
         if (actualValue > retval.second)
         {
             retval.first = index + 1;
             retval.second = actualValue;
         }
+
+        // float actualValue = _perceptronGraph.getCurrent()->getDataPtr()->getNormalizedValue();
         _perceptronGraph.nextNode(0);
         index++;
     }
@@ -267,9 +290,40 @@ std::pair <unsigned int, float> Perceptron::getResult(void)
     return retval;
 }
 
+std::pair <float, float> Perceptron::getSumOfValueAndSumOfErrors(void)
+{
+    std::pair retval = std::make_pair(0.0, 0.0f);
+
+    std::pair outputClass = getResultWithNormalized();
+    
+    float errorSum = 0.0f;
+    int expectedIndex = 0;
+    unsigned int index = 0;
+    while(_perceptronGraph.prevNode(index) == true)
+    {
+        errorSum += _perceptronGraph.getCurrent()->getDataPtr()->getError();
+        // std::cout << "Output Num " << index << " sigmoid: " << _perceptronGraph.getCurrent()->getDataPtr()->getValue() << std::endl;
+        if ((int) round(_perceptronGraph.getCurrent()->getDataPtr()->getExpected()) == 1)
+        {
+            expectedIndex = index + 1;
+        }
+
+        index++;
+        _perceptronGraph.nextNode(0);
+    }
+
+    retval.first = expectedIndex;
+    retval.second = errorSum;
+
+
+    return retval;
+}
+
+
+
 void Perceptron::updateWeights(void)
 {
-    if (getNumberOfHiddenLayers() > 0)
+    if (getNumberOfHiddenLayers() + 1 > 0)
     {
         backPropagation();
     }
@@ -288,7 +342,7 @@ void Perceptron::backPropagation(void)
 {
     std::shared_ptr<Node<var_type>> holdFeedbackNode = _perceptronGraph.getCurrent();
 
-    _perceptronGraph.prevNode(0);
+    // _perceptronGraph.prevNode(0);
     // //! And then again to go to the first hidden layer
 
     //! While the next hidden layers 
@@ -297,22 +351,51 @@ void Perceptron::backPropagation(void)
         unsigned int currHidenLayerIndex = 0;
         while (_perceptronGraph.prevNode(currHidenLayerIndex) == true)
         {
-            float sum = 0.0f;
-            unsigned int prevNeuronsIndex = 0;
-            while (_perceptronGraph.nextNode(prevNeuronsIndex) == true)
-            {
-                float value = _perceptronGraph.getCurrent()->getDataPtr()->getValue();
-                _perceptronGraph.prevNode(currHidenLayerIndex);
+            // float sum = 0.0f;
+            float smallDelta = 0.0f;
 
-                sum += value*_perceptronGraph.getCurrent()->getDataPtr()->getWeight(prevNeuronsIndex);
+            if (hiddenLayerIndex == 0)
+            {
+                float neuronValue = _perceptronGraph.getCurrent()->getDataPtr()->getValue();
+                float neuronError = _perceptronGraph.getCurrent()->getDataPtr()->getError();
+                smallDelta = neuronError*(neuronValue*(1 - neuronValue));
+                // smallDelta = _perceptronGraph.getCurrent()->getDataPtr()->getError()*derivativeSigmoidFunc(_perceptronGraph.getCurrent()->getDataPtr()->getSum());
+                _perceptronGraph.getCurrent()->getDataPtr()->setSmallDelta(smallDelta);
+            }
+            else
+            {
+ 
+                int indexNextNeuron = 0;
+
+                float smallDeltaHiddenSum = 0.0f;
+                while (_perceptronGraph.nextNode(indexNextNeuron) == true)
+                {
+                    float nextNeuronSmallDelta = _perceptronGraph.getCurrent()->getDataPtr()->getSmallDelta();
+                    float nextNeuronWeight = _perceptronGraph.getCurrent()->getDataPtr()->getWeight(currHidenLayerIndex);
+                    smallDeltaHiddenSum += nextNeuronSmallDelta*nextNeuronWeight;
+
+                    _perceptronGraph.prevNode(currHidenLayerIndex);
+
+                    indexNextNeuron++;
+                }
+
+                smallDelta = smallDeltaHiddenSum*derivativeSigmoidFunc(_perceptronGraph.getCurrent()->getDataPtr()->getSum());
+
+                _perceptronGraph.getCurrent()->getDataPtr()->setSmallDelta(smallDelta);
+            } 
+            
+            unsigned int prevNeuronsIndex = 0;
+            while (_perceptronGraph.prevNode(prevNeuronsIndex) == true)
+            {
+                float deltaWeightPrevNeuron = 0.3*smallDelta*_perceptronGraph.getCurrent()->getDataPtr()->getValue();
+                
+                _perceptronGraph.nextNode(currHidenLayerIndex);
+
+                float oldWeightPrevNeuron = _perceptronGraph.getCurrent()->getDataPtr()->getWeight(prevNeuronsIndex);
+                _perceptronGraph.getCurrent()->getDataPtr()->setWeight(oldWeightPrevNeuron + deltaWeightPrevNeuron, prevNeuronsIndex);
+
                 prevNeuronsIndex++;
             }
-
-            //! Pass the sum thgough the sigmoid
-            float sigmoid = 1/(1 + std::exp(-sum));
-
-            //! And set the new value for the current neuron
-            _perceptronGraph.getCurrent()->getDataPtr()->setValue(sigmoid);
 
             _perceptronGraph.nextNode(0);
             currHidenLayerIndex++;
@@ -612,4 +695,16 @@ void Perceptron::debugPerceptron()
     _perceptronGraph.printAllNextNodes();
     std::cout << "Neurons" << std::endl;
     _perceptronGraph.printAllPrevNodes();
+}
+
+
+float Perceptron::sigmoidFunc(float sum)
+{
+    return 1/(1 + std::exp(-sum));
+}
+
+float Perceptron::derivativeSigmoidFunc(float sum)
+{
+    return sigmoidFunc(sum)*(1 - sigmoidFunc(sum));
+    // return sum*(1 - sum);
 }
